@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><title>Reportes</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+</head><body>
+<nav class="navbar navbar-dark bg-danger px-3">
+  <a class="navbar-brand fw-bold" href="/dashboard"><i class="bi bi-heart-pulse-fill me-2"></i>FisioSalud</a>
+  <a href="/dashboard" class="btn btn-outline-light btn-sm">← Dashboard</a>
+</nav>
+<div class="container px-4 py-4">
+  <h4 class="mb-4"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i>Generación de Reportes PDF</h4>
+  <div class="row g-4">
+    <!-- Reporte 1: Sesiones por período -->
+    <div class="col-md-6">
+      <div class="card shadow border-danger">
+        <div class="card-header bg-danger text-white">
+          <h6 class="mb-0"><i class="bi bi-clipboard2-data me-2"></i>Reporte 1: Sesiones por Período</h6>
+        </div>
+        <div class="card-body">
+          <p class="text-muted small">Genera un listado de todas las sesiones realizadas en un rango de fechas, con paciente, fisioterapeuta, tipo de terapia y monto cobrado.</p>
+          <form th:action="@{/reportes/sesiones}" method="get" target="_blank">
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Fecha inicio</label>
+                <input type="date" name="inicio" class="form-control form-control-sm" required/>
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Fecha fin</label>
+                <input type="date" name="fin" class="form-control form-control-sm" required/>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">
+              <i class="bi bi-download me-2"></i>Descargar PDF
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Reporte 2: Ingresos mensuales -->
+    <div class="col-md-6">
+      <div class="card shadow border-danger">
+        <div class="card-header bg-danger text-white">
+          <h6 class="mb-0"><i class="bi bi-cash-coin me-2"></i>Reporte 2: Ingresos Mensuales</h6>
+        </div>
+        <div class="card-body">
+          <p class="text-muted small">Consolida los ingresos del centro por mes, agrupados por fisioterapeuta, mostrando número de sesiones y total facturado.</p>
+          <form th:action="@{/reportes/ingresos}" method="get" target="_blank">
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Año</label>
+                <input type="number" name="anio" class="form-control form-control-sm" value="2026" min="2020" max="2030" required/>
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Mes</label>
+                <select name="mes" class="form-select form-select-sm" required>
+                  <option value="1">Enero</option><option value="2">Febrero</option>
+                  <option value="3">Marzo</option><option value="4">Abril</option>
+                  <option value="5">Mayo</option><option value="6">Junio</option>
+                  <option value="7">Julio</option><option value="8">Agosto</option>
+                  <option value="9">Septiembre</option><option value="10">Octubre</option>
+                  <option value="11">Noviembre</option><option value="12" selected>Diciembre</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-danger w-100">
+              <i class="bi bi-download me-2"></i>Descargar PDF
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body></html>

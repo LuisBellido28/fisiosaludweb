@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head><meta charset="UTF-8"/><title>Reservas</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+</head><body>
+<nav class="navbar navbar-dark bg-primary px-3">
+  <a class="navbar-brand fw-bold" href="/dashboard"><i class="bi bi-heart-pulse-fill me-2"></i>FisioSalud</a>
+  <div class="d-flex gap-2">
+    <a href="/pacientes" class="btn btn-light btn-sm">Pacientes</a>
+    <a href="/fisioterapeutas" class="btn btn-light btn-sm">Fisios</a>
+    <a href="/equipos" class="btn btn-light btn-sm">Equipos</a>
+    <a href="/reservas" class="btn btn-light btn-sm">Reservas</a>
+    <a href="/reservas/disponibilidad" class="btn btn-light btn-sm">Disponibilidad</a>
+    <form th:action="@{/logout}" method="post" class="d-inline">
+      <button class="btn btn-outline-light btn-sm">Salir</button>
+    </form>
+  </div>
+</nav>
+<div class="container-fluid px-4 py-3">
+  <div th:if="${msg}" class="alert alert-success"><span th:text="${msg}"></span></div>
+  <div th:if="${error}" class="alert alert-danger"><span th:text="${error}"></span></div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4><i class="bi bi-calendar-check me-2 text-primary"></i>Gestión de Reservas</h4>
+    <div class="d-flex gap-2">
+      <a href="/reservas" class="btn btn-outline-primary btn-sm">Pendientes</a>
+      <a href="/reservas/todas" class="btn btn-outline-secondary btn-sm">Todas</a>
+      <a href="/reservas/nueva" class="btn btn-primary"><i class="bi bi-plus me-2"></i>Nueva Reserva</a>
+    </div>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="table-primary">
+          <tr><th>N.°</th><th>Paciente</th><th>Fisioterapeuta</th><th>Fecha y Hora</th><th>Tipo de Terapia</th><th>Motivo</th><th>Estado</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          <tr th:if="${#lists.isEmpty(reservas)}">
+            <td colspan="8" class="text-center text-muted py-4">No hay reservas registradas.</td>
+          </tr>
+          <tr th:each="r, i : ${reservas}">
+            <td th:text="${i.count}"></td>
+            <td class="fw-semibold" th:text="${r.paciente.nombre + ' ' + r.paciente.apellido}"></td>
+            <td th:text="${r.fisioterapeuta.nombre + ' ' + r.fisioterapeuta.apellido}"></td>
+            <td th:text="${#temporals.format(r.fechaHora, 'dd/MM/yyyy HH:mm')}"></td>
+            <td><span class="badge bg-info text-dark" th:text="${r.tipoTerapia}"></span></td>
+            <td><small th:text="${#strings.abbreviate(r.motivo, 35)}"></small></td>
+            <td>
+              <span class="badge" th:classappend="${r.estado == 'PENDIENTE' ? 'bg-warning text-dark' : r.estado == 'COMPLETADA' ? 'bg-success' : r.estado == 'CANCELADA' ? 'bg-danger' : 'bg-info'}" th:text="${r.estado}"></span>
+            </td>
+            <td>
+              <a th:if="${r.estado == 'PENDIENTE'}"
+                 th:href="@{/sesiones/registrar/{id}(id=${r.id})}"
+                 class="btn btn-sm btn-outline-success me-1" title="Registrar sesión">
+                <i class="bi bi-clipboard2-pulse"></i>
+              </a>
+              <a th:if="${r.estado == 'PENDIENTE'}"
+                 th:href="@{/reservas/cancelar/{id}(id=${r.id})}"
+                 class="btn btn-sm btn-outline-danger"
+                 onclick="return confirm('¿Cancelar esta reserva?')">
+                <i class="bi bi-x-circle"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body></html>

@@ -1,0 +1,6 @@
+body { font-family: "Segoe UI", sans-serif; background-color: #f5f7fa; }
+.navbar { box-shadow: 0 2px 6px rgba(0,0,0,.15); }
+.card { border-radius: 10px; }
+.table th { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em; }
+.badge { font-size: 0.75rem; }
+.card-header { border-radius: 10px 10px 0 0 !important; }

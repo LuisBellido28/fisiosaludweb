@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+ "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              name="reporte_ingresos" pageWidth="595" pageHeight="842"
+              columnWidth="535" leftMargin="30" rightMargin="30"
+              topMargin="20" bottomMargin="20">
+  <parameter name="TITULO" class="java.lang.String"/>
+  <parameter name="MES_ANIO" class="java.lang.String"/>
+  <parameter name="TOTAL_GENERAL" class="java.lang.Double"/>
+  <field name="fisioterapeuta" class="java.lang.String"/>
+  <field name="numSesiones" class="java.lang.Integer"/>
+  <field name="totalIngresado" class="java.lang.Double"/>
+  <title>
+    <band height="70">
+      <staticText><reportElement x="0" y="0" width="535" height="30"/>
+        <textElement textAlignment="Center"><font fontName="SansSerif" size="16" isBold="true"/></textElement>
+        <text><![CDATA[FisioSalud S.A.C.]]></text></staticText>
+      <textField><reportElement x="0" y="30" width="535" height="20"/>
+        <textElement textAlignment="Center"><font fontName="SansSerif" size="12" isBold="true"/></textElement>
+        <textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression></textField>
+      <textField><reportElement x="0" y="50" width="535" height="18"/>
+        <textElement textAlignment="Center"><font fontName="SansSerif" size="10"/></textElement>
+        <textFieldExpression><![CDATA["Mes: " + $P{MES_ANIO}]]></textFieldExpression></textField>
+    </band>
+  </title>
+  <columnHeader>
+    <band height="25">
+      <staticText><reportElement x="0" y="0" width="250" height="25" backcolor="#1a5276" mode="Opaque"/>
+        <textElement><font fontName="SansSerif" size="10" isBold="true"/></textElement>
+        <text><![CDATA[Fisioterapeuta]]></text></staticText>
+      <staticText><reportElement x="250" y="0" width="140" height="25" backcolor="#1a5276" mode="Opaque"/>
+        <textElement textAlignment="Center"><font fontName="SansSerif" size="10" isBold="true"/></textElement>
+        <text><![CDATA[N.° Sesiones]]></text></staticText>
+      <staticText><reportElement x="390" y="0" width="145" height="25" backcolor="#1a5276" mode="Opaque"/>
+        <textElement textAlignment="Right"><font fontName="SansSerif" size="10" isBold="true"/></textElement>
+        <text><![CDATA[Total Ingresado S/.]]></text></staticText>
+    </band>
+  </columnHeader>
+  <detail>
+    <band height="22">
+      <textField><reportElement x="0" y="1" width="250" height="20"/>
+        <textElement><font fontName="SansSerif" size="10"/></textElement>
+        <textFieldExpression><![CDATA[$F{fisioterapeuta}]]></textFieldExpression></textField>
+      <textField><reportElement x="250" y="1" width="140" height="20"/>
+        <textElement textAlignment="Center"><font fontName="SansSerif" size="10"/></textElement>
+        <textFieldExpression><![CDATA[$F{numSesiones}]]></textFieldExpression></textField>
+      <textField><reportElement x="390" y="1" width="145" height="20"/>
+        <textElement textAlignment="Right"><font fontName="SansSerif" size="10"/></textElement>
+        <textFieldExpression><![CDATA[String.format("%.2f", $F{totalIngresado})]]></textFieldExpression></textField>
+    </band>
+  </detail>
+  <summary>
+    <band height="30">
+      <staticText><reportElement x="250" y="5" width="140" height="20"/>
+        <textElement textAlignment="Center"><font fontName="SansSerif" size="11" isBold="true"/></textElement>
+        <text><![CDATA[TOTAL GENERAL:]]></text></staticText>
+      <textField><reportElement x="390" y="5" width="145" height="20"/>
+        <textElement textAlignment="Right"><font fontName="SansSerif" size="11" isBold="true"/></textElement>
+        <textFieldExpression><![CDATA["S/. " + String.format("%.2f", $P{TOTAL_GENERAL})]]></textFieldExpression></textField>
+    </band>
+  </summary>
+</jasperReport>

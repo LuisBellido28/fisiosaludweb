@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/><title>Nueva Reserva</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+</head><body class="bg-light">
+<nav class="navbar navbar-dark bg-primary px-3 mb-4">
+  <a class="navbar-brand fw-bold" href="/dashboard"><i class="bi bi-heart-pulse-fill me-2"></i>FisioSalud</a>
+  <a href="/reservas" class="btn btn-outline-light btn-sm">← Volver a Reservas</a>
+</nav>
+<div class="container" style="max-width:700px">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0"><i class="bi bi-calendar-plus me-2"></i>Nueva Reserva de Cita</h5>
+    </div>
+    <div class="card-body">
+      <form th:action="@{/reservas/guardar}" method="post">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Paciente *</label>
+            <select name="pacienteId" class="form-select" required>
+              <option value="">Seleccionar paciente...</option>
+              <option th:each="p : ${pacientes}" th:value="${p.id}"
+                      th:text="${p.nombre + ' ' + p.apellido + ' - DNI: ' + p.dni}"></option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Fisioterapeuta *</label>
+            <select name="fisioterapeutaId" class="form-select" required>
+              <option value="">Seleccionar fisioterapeuta...</option>
+              <option th:each="f : ${fisioterapeutas}" th:value="${f.id}"
+                      th:text="${f.nombre + ' ' + f.apellido + ' [' + f.especialidad + ']'}"></option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Fecha y hora *</label>
+            <input type="datetime-local" name="fechaHora" class="form-control" required/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Tipo de terapia *</label>
+            <select name="tipoTerapia" class="form-select" required>
+              <option value="">Seleccionar...</option>
+              <option th:each="t : ${terapias}" th:value="${t}" th:text="${t}"></option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold">Motivo de consulta</label>
+            <textarea name="motivo" class="form-control" rows="3" placeholder="Describe el motivo de la cita..."></textarea>
+          </div>
+        </div>
+        <hr/>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-save me-2"></i>Guardar Reserva</button>
+          <a href="/reservas" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body></html>
